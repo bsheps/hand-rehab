@@ -1,0 +1,55 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}           %package to display pics
+\usepackage[section]{placeins}  %to prevent pictures from floating around
+
+\title{\vspace{-10ex}A Smartphone Application For Home-based Hand Rehabilitation}
+\author{Kody Fitch, Brandon Shepard, Martin Soto, Joseph Yang\and Supervisor: Professor Rahman}
+\date{CS595 Spring 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+    Our goal is to design and prototype a smartphone based, hand rehabilitation application. Deliverable at the end of the project will be a fully functional smartphone application that guides and measures rehabilitation through the use of a wearable robotic glove. 
+
+\section{Functionality}
+    The smartphone application will communicate wirelessly with the robotic glove. The robotic glove will receive exercise direction from the application while communicating glove positional data back to the application. The application will process, display and communicate this glove data to the patient while simultaneously uploading hand data to the cloud. With the data stored in the cloud, the rehab professional can login to the application, access patient data and prescribe exercises remotely.
+    \begin{figure}[h]
+         \centering
+         \includegraphics[width=1\textwidth]{rahmanSchematic}
+         \caption{Rehabilitation System Schematic}
+    \end{figure}
+
+\section{Technologies}
+
+    \subsection{Smartphone platform}
+        We have chosen to use Ionic. Ionic is a framework based off the popular Angular platform created by Google. Ionic allows for the creation of platform agnosic, hybrid applications. A hybrid application supports both web applications and native applications, making it a strong choice for this project. Additionally, the ionic website appears to be well documentated and the platform comes with the majority of the components needed to complete the project.
+        
+    \subsection{Robotic glove simulation}
+        A robotic glove prototype is being developed by Prof. Rahman's team at the UWM Biorobotics lab. In the mean time we will be simulating the glove with the use of Leap Motion sensor and a bionic robotic hand. Both items are being provided by the UWM Biorobtics lab.
+        \begin{figure}[h]
+         \centering
+         \includegraphics[width=50mm, scale=0.1]{bionicRoboticHand}
+         \caption{Bionic Robotic Hand}
+        \end{figure}
+        
+    \subsection{Cloud service}
+        TBD - Martin is working on this last I heard... reminder to add justification below
+        
+    \subsection{Justification for \& alternative technologies}
+        As with most web dev projects, there are countless alternatives. Some popular alternatives to Ionic include React Native (React), Kendo UI (JQuery) or Quasar (Vue). The platform decision was based on three criterion: 
+        \begin{itemize}
+         \item group skillset
+         \item quality of documentation
+         \item platform coverage
+        \end{itemize}
+        With quality of documentation and platform coverage being sufficient across the various platforms, the differentiator was group skillset. Overall, our group had the most experience with Angular platforms. As such, Ionic was decided upon.
+        
+        The robotic glove is currently in development, and there does not appear to be a marketed alternative. There appear to be alternatives to leap motion sensors, but since Prof. Rahman has provided and recommended the simulation hardware. As a result, we did not extensively search for alternatives. 
+        
+        In regards to the bionic hand. Generally speaking, as robotic hand precision increases so does cost. Again, Prof. Rahman has lead the decision process for robotic hand selection as he balances budgetary constraints with precision constraints.
+
+\end{document}
