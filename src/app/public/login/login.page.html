@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Hand Rehab login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item>
+      <ion-input [(ngModel)]="user.username" placeholder="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="user.password" type="password" placeholder="password"></ion-input>
+    </ion-item>
+  <ion-button (click)="login()" expand="block">Login</ion-button>
+  <!-- Route user to the register page -->
+  <ion-button expand="block" color="secondary" routerLink="/register" routerDirection="forward">Register</ion-button>
+  <!-- This section can be deleted once we get login working -->
+  There is no login user/pass required yet.
+  <br>Username: {{user.username}}
+  <br>Password: {{user.password}}
+</ion-content>
