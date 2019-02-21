@@ -7,9 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterPage implements OnInit {
 
+  registration = {
+    username: '',
+    password: '',
+    passwordVerify: ''
+  }
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  passwordVerify(){
+    
+  }
+
+  createUser(){
+    //#TODO
+    //need to verify unique username and register user with cloud
+    //so that they can get JWT 
   }
 
 }

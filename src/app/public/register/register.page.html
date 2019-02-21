@@ -3,10 +3,29 @@
     <ion-buttons slot="start">
         <ion-back-button defaultHref="/login"></ion-back-button>
     </ion-buttons>
-    <ion-title>Register</ion-title>
+    <ion-title>Create an Account</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  #TODO: There needs to be a form here for patients to register.
+  <ion-item>
+      <ion-label color="primary">Username</ion-label>
+    <ion-input [(ngModel)]="registration.username" placeholder="Create username"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label color="primary">Password</ion-label>
+    <ion-input [(ngModel)]="registration.password" type="password" placeholder="Create password"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label color="primary">Password</ion-label>
+    <ion-input [(ngModel)]="registration.passwordVerify" type="password" placeholder="Verify password"></ion-input>
+  </ion-item>
+  <!--simple warning message-->
+  <ion-item *ngIf="registration.passwordVerify && (registration.password !== registration.passwordVerify)" lines="none">
+     <ion-label color="danger">Note: passwords must match!</ion-label>
+  </ion-item>
+  <ion-button (click)="createUser()" type="submit" expand="block">Login</ion-button>
+  <br>Username: {{registration.username}}
+  <br>Password: {{registration.password}}
+  <br>Password: {{registration.passwordVerify}}
 </ion-content>
