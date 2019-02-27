@@ -1,0 +1,20 @@
+{
+    "appName": "handrehabapp",
+    "roleName": "pinpointLambdaRole2ee51b76",
+    "cloudWatchPolicyName": "cloudWatchPolicy2ee51b76",
+    "pinpointPolicyName": "pinpointPolicy2ee51b76",
+    "authPolicyName": "pinpoint_amplify_2ee51b76",
+    "unauthPolicyName": "pinpoint_amplify_2ee51b76",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
