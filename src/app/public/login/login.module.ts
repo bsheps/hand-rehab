@@ -1,5 +1,5 @@
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,12 @@ import { LoginPage } from './login.page';
 
 import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-amplify-angular'
 
+const routes: Routes = [
+  {
+    path: '',
+    component: LoginPage
+  }
+];
 
 @NgModule({
   imports: [
@@ -15,7 +21,7 @@ import { AmplifyAngularModule, AmplifyIonicModule, AmplifyService } from 'aws-am
     FormsModule,
     AmplifyAngularModule,
     AmplifyIonicModule,
-    RouterModule.forChild([{ path: '', component: LoginPage }])
+    RouterModule.forChild(routes)
   ],
   declarations: [LoginPage],
   providers: [AmplifyService]

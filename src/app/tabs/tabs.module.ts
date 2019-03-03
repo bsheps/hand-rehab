@@ -8,18 +8,14 @@ import { TabsPageRoutingModule } from './tabs.router.module';
 
 import { TabsPage } from './tabs.page';
 
-import { AuthGuardService } from '../services/auth-route-guard';
-import { LoginPageModule } from '../login/login.module';
-
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    LoginPageModule
   ],
   declarations: [TabsPage],
-  providers: [AuthGuardService]
+  providers: []
 })
 export class TabsPageModule {}

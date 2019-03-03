@@ -1,6 +1,6 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { Events } from '@ionic/angular';
-import { AuthGuardService } from '../services/auth-route-guard'
+import { AuthGuardService } from '../../services/auth-route-guard'
 import { AmplifyService }  from 'aws-amplify-angular';
 
 
