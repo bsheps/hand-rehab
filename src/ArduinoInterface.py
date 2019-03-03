@@ -10,10 +10,10 @@ def read_serial():
 		print ser.readline()
 
 
-def write_serial(string_message):
-	ser.write(string_message.encode())
-
-
-# while True:
-# 	write_serial("Test message")
-# 	time.sleep(5)
+def write_serial(content):
+	print("Writing: ", content)
+	try:
+		ser.write(content)
+	except Exception, e:
+		print("Failed to write: ")
+		print(e)
