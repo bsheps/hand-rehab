@@ -1,27 +1,7 @@
-import Leap, sys, time
 import math
 import ArduinoInterface
-from threading import Thread
-
-
-class LeapMotionListener(Leap.Listener):
-
-	hand_visible = False
-
-	def on_init(self, controller):
-		print "Initialized"
-
-	def on_connect(self, controller):
-		print "Motion Sensor Connected"
-
-	def on_disconnect(self, controller):
-		print "Motion Sensor Disconnected"
-
-	def on_exit(self, controller):
-		print "Exited"
-
-	def on_frame(self, controller):
-		pass
+import Leap
+import time
 
 
 def process_frame(frame):
@@ -33,7 +13,7 @@ def process_frame(frame):
 		# thumb
 		thumb_list = hand.fingers.finger_type(Leap.Finger.TYPE_THUMB)
 		thumb = thumb_list[0]
-		angle_string1 = calculate_angle(thumb, hand_normal)
+		angle_string1 = calc_thumb(thumb, hand_normal)
 
 		# index finger
 		index_finger_list = hand.fingers.finger_type(Leap.Finger.TYPE_INDEX)
@@ -56,29 +36,40 @@ def process_frame(frame):
 		angle_string5 = calculate_angle(pinky, hand_normal)
 
 		final_string = angle_string1 + "b" + angle_string2 + "c" + angle_string3 + "d" + angle_string4 + "e" + angle_string5 + "f"
-		print(final_string)
 		return final_string
 
 
 def calculate_angle(finger, palm_vector):
-	bone_direction = finger.bone(Leap.Bone.TYPE_DISTAL).direction
-	angle = 2 * (180 - math.degrees(palm_vector.angle_to(bone_direction)))
+	val = math.degrees(palm_vector.angle_to(finger.direction))
+	angle = 180 - (65 - val) * 2
 	if angle > 180:
 		angle = 180
+	elif angle < 0:
+		angle = 0
+
+	return str(int(angle))
+
+
+def calc_thumb(finger, palm_normal):
+	val = math.degrees(palm_normal.angle_to(finger.direction))
+	angle = 200 - (110 - val) * 2
+	if angle > 180:
+		angle = 180
+	elif angle < 0:
+		angle = 0
 	return str(int(angle))
 
 
 def loop_frame(controller):
 	while True:
-		ArduinoInterface.write_serial(process_frame(controller.frame()))
-		time.sleep(0.05)
+		command = process_frame(controller.frame())
+		if command is not None:
+			ArduinoInterface.write_serial(command)
+		time.sleep(0.1)
 
 
 def main():
-	# listener = LeapMotionListener()
 	controller = Leap.Controller()
-	# controller.add_listener(listener)
-
 	loop_frame(controller)
 
 
