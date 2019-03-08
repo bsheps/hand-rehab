@@ -18,14 +18,27 @@
   </ion-item>
   <ion-item>
       <ion-label color="primary">Password</ion-label>
-    <ion-input [(ngModel)]="registration.passwordVerify" type="password" placeholder="Verify password"></ion-input>
+    <ion-input [(ngModel)]="passwordVerify" type="password" placeholder="Verify password"></ion-input>
   </ion-item>
   <!--simple warning message-->
-  <ion-item *ngIf="registration.passwordVerify && (registration.password !== registration.passwordVerify)" lines="none">
+  <ion-item *ngIf="passwordVerify && (registration.password !== passwordVerify)" lines="none">
      <ion-label color="danger">Note: passwords must match!</ion-label>
   </ion-item>
-  <ion-button (click)="createUser()" type="submit" expand="block">Login</ion-button>
+  <ion-button (click)="createUser()" type="submit" expand="block">Register</ion-button>
+
+  <!-- Testing purposes -->
   <br>Username: {{registration.username}}
   <br>Password: {{registration.password}}
-  <br>Password: {{registration.passwordVerify}}
+  <br>Password: {{passwordVerify}}
+  <br>
+  <br>Hardcoded username: "hand", password: "password".
+  <br>
+  <ion-button (click)="testApiPost()">test api post</ion-button>
+  <div *ngIf="postResponse">
+    {{postResponse}}
+  </div>
+  <ion-button (click)="testApiGet()">test api get</ion-button>
+  <div *ngIf="getResponse">
+    {{getResponse}}
+  </div>
 </ion-content>

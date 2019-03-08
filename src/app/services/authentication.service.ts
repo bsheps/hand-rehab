@@ -8,7 +8,7 @@ import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage'; //the TOKE_KEY will be placed into Storage
 import { BehaviorSubject } from 'rxjs';
 
-const TOKEN_KEY = 'TokenPlaceholder,this variable will hold the JWT or whatever session token we use';
+const TOKEN_KEY = undefined;  //default token is undefined
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +32,10 @@ export class AuthenticationService {
       }
     })
   }
-
-  login() {
-     //#TODO
-     //login logic goes here
-     
-    return this.storage.set(TOKEN_KEY, 'The token goes here').then(() => {
+  
+  //Put the token in storage and set authenticationState true
+  login(token) {
+    return this.storage.set(TOKEN_KEY, token).then(() => {
       this.authenticationState.next(true);
     });
   }

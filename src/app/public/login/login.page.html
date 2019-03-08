@@ -13,6 +13,7 @@
       <ion-label color="primary">Password</ion-label>
       <ion-input [(ngModel)]="user.password" type="password" placeholder="******"></ion-input>
     </ion-item>
+    <ion-label *ngIf="errorMessage" color="danger">{{errorMessage}}</ion-label>
   <ion-button (click)="login()" expand="block">Login</ion-button>
   <!-- Route user to the register page -->
   <ion-button expand="block" color="secondary" routerLink="/register" routerDirection="forward">Register</ion-button>

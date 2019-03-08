@@ -11,6 +11,7 @@ export class DashboardPage implements OnInit {
   constructor(private authService: AuthenticationService) { }
 
   ngOnInit() {
+    //TODO: Server call for metadata
   }
 
   logout(){
