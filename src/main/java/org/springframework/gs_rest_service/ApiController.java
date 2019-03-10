@@ -43,24 +43,23 @@ public class ApiController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		Login userLogin = null;
-		JWT jwt;
-		String token = "";
-		String loginSuccess = "false";
+		JSONObject json = new JSONObject();
 		
 		try {
 			userLogin = mapper.readValue(login, Login.class);
 			
-//			Debugging Test
-			System.out.println(userLogin.getUsername());
-			System.out.println(userLogin.getPassword());
+			System.out.printf("Login attempt: %s\t%s\t",userLogin.getUsername(), new String(userLogin.getPassword()));
 			
 			//This verifies the user login, eventually this login 
 			//will need to be created in the authentication class
 			//this is just dummy data for developing the app
-			if(userLogin.getUsername().equals("hand") && userLogin.getPassword().equals("password")) {
-				jwt = new JWT();
-				token = jwt.createJWT(userLogin.getUsername(), "SpringServer", "", 0);
-				loginSuccess = "true";
+			if(userLogin.getUsername().equals("hand") && (new String(userLogin.getPassword())).equals("password")) {
+				JWT jwt = new JWT();
+				String token = jwt.createJWT(userLogin.getUsername(), "SpringServer", "", 0);
+				json.put("success", "true");
+				json.put("token", token);
+				System.out.println("Success.");
+				return json.toString();
 			}
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
@@ -75,10 +74,9 @@ public class ApiController {
 		
 		// Helpful tutorial on using JSON:
 		// https://www.youtube.com/watch?v=wDVH3qnXv74
-		JSONObject json = new JSONObject();
-		json.put("success", loginSuccess);
-		json.put("token", token);
-		
+		json.put("success", "false");
+		json.put("token", "");
+		System.out.println("Failed.");
 		return json.toString();
 	}
 }

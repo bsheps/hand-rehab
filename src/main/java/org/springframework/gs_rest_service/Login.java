@@ -3,7 +3,7 @@ package org.springframework.gs_rest_service;
 public class Login {
 	
 	private String username;
-	private String password;
+	private char[] password;
 	
 	public String getUsername() {
 		return username;
@@ -11,10 +11,10 @@ public class Login {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
+	public char[] getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(char[] password) {
 		this.password = password;
 	}
 }
