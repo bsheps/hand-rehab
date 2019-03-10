@@ -48,7 +48,19 @@ public class ApiController {
 		try {
 			userLogin = mapper.readValue(login, Login.class);
 			
-			System.out.printf("Login attempt: %s\t%s\t",userLogin.getUsername(), new String(userLogin.getPassword()));
+			byte[] salt = PasswordUtility.getNextSalt();
+			String saltAndHashPassword = PasswordUtility.getSaltedHash(salt, userLogin.getPassword());
+			
+			// Show what's going on behind the scenes
+			// The database will need to store:
+			// 	1.) userLogin.getUsername()
+			//  2.) salt
+			//  3.) saltAndHashPassword
+			System.out.printf("User: %s\tpass: %s\tsalt: %s\thash: %s\t",userLogin.getUsername(), 
+																		new String(userLogin.getPassword()), 
+																		PasswordUtility.convertByteArray2Hex(salt), 
+																		saltAndHashPassword);
+			
 			
 			//This verifies the user login, eventually this login 
 			//will need to be created in the authentication class
