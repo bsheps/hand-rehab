@@ -169,6 +169,66 @@
 					"env": "handenv"
 				}
 			}
+		},
+		"storagehandRehabAppResource": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/storage/handRehabAppResource-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "handRehabAppUsers",
+					"partitionKeyName": "username",
+					"partitionKeyType": "S",
+					"env": "handenv"
+				}
+			}
+		},
+		"functionhandRehabAppLambda": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/function/handRehabAppLambda-cloudformation-template.json",
+				"Parameters": {
+					"storagehandRehabAppResourceName": {
+						"Fn::GetAtt": [
+							"storagehandRehabAppResource",
+							"Outputs.Name"
+						]
+					},
+					"storagehandRehabAppResourceArn": {
+						"Fn::GetAtt": [
+							"storagehandRehabAppResource",
+							"Outputs.Arn"
+						]
+					},
+					"env": "handenv"
+				}
+			}
+		},
+		"apihandRehabAppApi": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/api/handRehabAppApi-cloudformation-template.json",
+				"Parameters": {
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"functionhandRehabAppLambdaName": {
+						"Fn::GetAtt": [
+							"functionhandRehabAppLambda",
+							"Outputs.Name"
+						]
+					},
+					"functionhandRehabAppLambdaArn": {
+						"Fn::GetAtt": [
+							"functionhandRehabAppLambda",
+							"Outputs.Arn"
+						]
+					},
+					"env": "handenv"
+				}
+			}
 		}
 	},
 	"Outputs": {

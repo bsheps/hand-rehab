@@ -1,0 +1,5 @@
+{
+    "tableName": "handRehabAppUsers",
+    "partitionKeyName": "username",
+    "partitionKeyType": "S"
+}

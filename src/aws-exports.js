@@ -7,7 +7,21 @@ const awsmobile = {
     "aws_user_pools_id": "us-east-2_h2lLpeNUj",
     "aws_user_pools_web_client_id": "4ofcm062mipd42iviaj4n8bcv6",
     "aws_mobile_analytics_app_id": "c2dc94e0d01945329b17c9eefd022a6b",
-    "aws_mobile_analytics_app_region": "us-east-1"
+    "aws_mobile_analytics_app_region": "us-east-1",
+    "aws_dynamodb_all_tables_region": "us-east-2",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "handRehabAppUsers-handenv",
+            "region": "us-east-2"
+        }
+    ],
+    "aws_cloud_logic_custom": [
+        {
+            "name": "handRehabAppApi",
+            "endpoint": "https://4urrfyv0xa.execute-api.us-east-2.amazonaws.com/handenv",
+            "region": "us-east-2"
+        }
+    ]
 };
 
 
