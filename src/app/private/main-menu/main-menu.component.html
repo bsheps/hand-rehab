@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Patient menu</ion-title>
+      <ion-button slot="end" fill="clear" color="primary" (click)="pairClicked()"><ion-icon name="bluetooth"></ion-icon></ion-button>
+      <ion-button slot="start" fill="clear" color="primary" (click)="presentLogoutPopover($event)"><ion-icon ios="ios-log-out" md="md-log-out"></ion-icon></ion-button>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>  
+    <ion-card>
+      <!-- if we like additional screens, we can use patient menu. Currently going to leave it with the actionSheet-->
+        <!-- <ion-item button (click)="patientSelected(patient)" *ngFor="let patient of patientList" value="patient" class="primary"> -->
+            <ion-item button (click)="presentActionSheet(patient)" *ngFor="let patient of patientList" value="patient" class="primary">
+          <ion-icon color="secondary" name="md-person" slot="start"></ion-icon>
+          <ion-label>{{patient.name}}</ion-label>
+        </ion-item>
+    </ion-card>
+  <ion-footer>
+  </ion-footer>

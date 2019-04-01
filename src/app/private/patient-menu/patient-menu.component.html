@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{patient.name}}</ion-title>
+    <ion-back-button></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+      <ion-item button (click)="selection(option)" *ngFor="let option of menuOptions" value="option" class="primary">
+        <ion-icon color="secondary" name="{{option.icon}}" slot="start"></ion-icon>
+        <ion-label>{{option.value}}</ion-label>
+      </ion-item>
+  </ion-card>
+  </ion-content>
+<ion-footer>
+    
+</ion-footer>

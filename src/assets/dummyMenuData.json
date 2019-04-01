@@ -1,0 +1,36 @@
+{
+"patient": [
+    {
+    "id": 0,
+    "name": "Isaac Newton"
+    },
+    {
+    "id": 1,
+    "name": "Professor Goyal"
+    },
+    {
+    "id": 2,
+    "name": "James Maxwell"
+    },
+    {
+    "id": 3,
+    "name": "Alan Turing"
+    },
+    {
+    "id": 4,
+    "name": "Albert Einstein"
+    },
+    {
+      "id": 5,
+      "name": "Dennis Ritchie"
+    },
+    {
+      "id": 6,
+      "name": "Charles Darwin"
+    },
+    {
+      "id": 7,
+      "name": "Nikola Tesla"
+    }
+  ]
+}
