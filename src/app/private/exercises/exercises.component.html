@@ -1,22 +1,28 @@
 <ion-header>
     <ion-toolbar>
       <ion-title>{{patient.name}}</ion-title>
-      <ion-back-button slot="start"></ion-back-button>
+      <ion-button slot="start" fill="clear" color="primary" routerLink="/menu"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
       <ion-button slot="end" fill="clear" color="primary" (click)="pairClicked()"><ion-icon name="bluetooth"></ion-icon></ion-button>
     </ion-toolbar>
   </ion-header>
   
   <ion-content padding>
-    <ion-card *ngFor="let exercise of exerciseList" value="exercise">
-        <ion-card-header>
-          <ion-card-subtitle>{{exercise.subtitle}}</ion-card-subtitle>
-          <ion-card-title>{{exercise.title}}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>{{exercise.description}}</ion-card-content>
-        <ion-button (click)="startClicked(exercise)">Start</ion-button>
-        <ion-button color="danger" (click)="stopClicked()">Stop</ion-button>
-    </ion-card>
+    <div *ngFor="let exercise of exerciseList">
+      <ion-card *ngIf="(!isDoctor && exercise.isAssigned) || isDoctor" value="exercise">
+          <ion-card-header>
+            <ion-card-subtitle>{{exercise.subtitle}}</ion-card-subtitle>
+            <ion-card-title>{{exercise.title}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>{{exercise.description}}</ion-card-content>
+          <ion-button (click)="startClicked(exercise)">Start</ion-button>
+          <ion-button color="danger" (click)="stopClicked()">Stop</ion-button>
+          <ion-button *ngIf="isDoctor && !exercise.isAssigned" color="secondary" (click)="assign(exercise)">Assign</ion-button>
+          <ion-button *ngIf="isDoctor && exercise.isAssigned" color="warning" (click)="assign(exercise)">Unassign</ion-button>
+      </ion-card>
+    </div>
   </ion-content>
   <ion-footer>
-   
+    <ion-button (click)="toggleDr()">Toggle Doctor on/off</ion-button>
+    <div *ngIf="isDoctor">Doctor view</div>
+    <div *ngIf="!isDoctor">Patient view</div>
   </ion-footer>

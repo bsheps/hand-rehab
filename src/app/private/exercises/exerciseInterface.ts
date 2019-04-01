@@ -4,4 +4,5 @@ export interface IExercise{
     subtitle:string;
     description:string;
     serialData:string;
+    isAssigned?:boolean;
 }
