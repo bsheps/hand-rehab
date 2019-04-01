@@ -19,12 +19,18 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/auth/cognito47264419-cloudformation-template.yml",
 				"logicalId": "authcognito47264419"
 			},
-			"lastPushTimeStamp": "2019-03-31T15:46:35.484Z",
+			"lastPushTimeStamp": "2019-04-01T01:22:43.234Z",
 			"output": {
 				"IdentityPoolId": "us-east-2:6e919c08-f284-4a03-87e5-8ec3e7d48333",
-				"IdentityPoolName": "hand_rehab_app_identitypool_c7a35d3f__handenv"
+				"IdentityPoolName": "hand_rehab_app_identitypool_c7a35d3f__handenv",
+				"AppClientSecret": "a0baf5edm8ooifoc104ucj61jgiqsrimemcr1kmg144qdpfe9hr",
+				"UserPoolId": "us-east-2_h2lLpeNUj",
+				"AppClientIDWeb": "4ofcm062mipd42iviaj4n8bcv6",
+				"AppClientID": "6jgarr3b87imr74hn0t7m6qhc5",
+				"UserPoolName": "cognito47264419_userpool_e59eb5a1"
 			},
-			"lastPushDirHash": "OGCKulYH9YhBcYWqLbhdc3BDo/o="
+			"lastPushDirHash": "bm78mMUOAt7uZ9tcLTTUktaNF08=",
+			"[object Object]": {}
 		}
 	},
 	"analytics": {
@@ -35,7 +41,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
 				"logicalId": "analyticshandrehabapp"
 			},
-			"lastPushTimeStamp": "2019-03-31T15:46:35.484Z",
+			"lastPushTimeStamp": "2019-04-01T01:22:43.233Z",
 			"output": {
 				"appName": "handrehabapp-handenv",
 				"Region": "us-east-1",
