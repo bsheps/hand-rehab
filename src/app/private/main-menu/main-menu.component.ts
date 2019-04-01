@@ -5,6 +5,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { LogoutPopoverComponent } from './logout-popover/logout-popover.component';
+import { IPatient } from '../patientInterface';
 
 @Component({
   selector: 'app-main-menu',
@@ -12,7 +13,9 @@ import { LogoutPopoverComponent } from './logout-popover/logout-popover.componen
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent implements OnInit {
-  patientList;
+  
+  patientList: IPatient[];
+
   constructor(private http: HttpClient, 
               private router: Router, 
               public actionSheetController: ActionSheetController, 
@@ -21,7 +24,7 @@ export class MainMenuComponent implements OnInit {
 
   ngOnInit() {
     this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
-      console.warn(data);
+      console.log("http get patient menu data: "+ data);
       this.patientList = data['patient'];
     })
   }
