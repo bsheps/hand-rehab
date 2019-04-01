@@ -1,0 +1,48 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "hand-rehab-app-20190331104402-authRole",
+            "UnauthRoleArn": "arn:aws:iam::983001399348:role/hand-rehab-app-20190331104402-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::983001399348:role/hand-rehab-app-20190331104402-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "hand-rehab-app-20190331104402-deployment",
+            "UnauthRoleName": "hand-rehab-app-20190331104402-unauthRole",
+            "StackName": "hand-rehab-app-20190331104402",
+            "StackId": "arn:aws:cloudformation:us-east-2:983001399348:stack/hand-rehab-app-20190331104402/cd9b3c00-53cb-11e9-ba42-063ebf2048ea"
+        }
+    },
+    "auth": {
+        "cognito47264419": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/auth/cognito47264419-cloudformation-template.yml",
+                "logicalId": "authcognito47264419"
+            },
+            "lastPushTimeStamp": "2019-03-31T15:51:50.423Z",
+            "output": {
+                "IdentityPoolId": "us-east-2:6e919c08-f284-4a03-87e5-8ec3e7d48333",
+                "IdentityPoolName": "hand_rehab_app_identitypool_c7a35d3f__handenv"
+            },
+            "lastPushDirHash": "OGCKulYH9YhBcYWqLbhdc3BDo/o=",
+            "[object Object]": {}
+        }
+    },
+    "analytics": {
+        "handrehabapp": {
+            "service": "Pinpoint",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
+                "logicalId": "analyticshandrehabapp"
+            },
+            "lastPushTimeStamp": "2019-03-31T15:46:35.484Z",
+            "output": {
+                "appName": "handrehabapp-handenv",
+                "Region": "us-east-1",
+                "Id": "c2dc94e0d01945329b17c9eefd022a6b"
+            },
+            "lastPushDirHash": "r5Whwa6lGNbOAp40Ec0Yy7dYU6U="
+        }
+    }
+}

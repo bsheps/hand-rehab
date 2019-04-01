@@ -1,0 +1,19 @@
+{
+    "handenv": {
+        "awscloudformation": {
+            "AuthRoleName": "hand-rehab-app-20190331104402-authRole",
+            "UnauthRoleArn": "arn:aws:iam::983001399348:role/hand-rehab-app-20190331104402-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::983001399348:role/hand-rehab-app-20190331104402-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "hand-rehab-app-20190331104402-deployment",
+            "UnauthRoleName": "hand-rehab-app-20190331104402-unauthRole",
+            "StackName": "hand-rehab-app-20190331104402",
+            "StackId": "arn:aws:cloudformation:us-east-2:983001399348:stack/hand-rehab-app-20190331104402/cd9b3c00-53cb-11e9-ba42-063ebf2048ea"
+        },
+        "categories": {
+            "auth": {
+                "cognito47264419": {}
+            }
+        }
+    }
+}
