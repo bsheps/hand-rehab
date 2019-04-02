@@ -1,0 +1,26 @@
+{
+    "isDoctor": "true",
+    "historyList": [
+        {
+            "id": 0,
+            "title": "5 degree hand close",
+            "subtitle": "Glove assisted",
+            "description": "This exercise starts with all fingers fully opened. Next, it slowly closes all fingers 5 degrees and then returns to fully opened.",
+            "isComplete":true
+        },
+        {
+            "id": 1,
+            "title": "10 degree hand close",
+            "subtitle": "Glove assisted",
+            "description": "This exercise starts with all fingers fully opened. Next, it slowly closes all fingers 10 degrees and then returns to fully opened.",
+            "isComplete": false        
+        },
+        {
+            "id": 2,
+            "title": "15 degree hand close",
+            "subtitle": "No assist",
+            "description": "This exercise starts with all fingers fully opened. Next, it slowly closes all fingers 15 degrees and then returns to fully opened.",
+            "isComplete": false
+        }
+      ]
+    }
