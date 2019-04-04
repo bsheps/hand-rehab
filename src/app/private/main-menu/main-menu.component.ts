@@ -6,6 +6,7 @@ import { ToastController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { LogoutPopoverComponent } from './logout-popover/logout-popover.component';
 import { IPatient } from '../patientInterface';
+import { Serial } from '@ionic-native/serial/ngx';
 
 @Component({
   selector: 'app-main-menu',
@@ -20,7 +21,8 @@ export class MainMenuComponent implements OnInit {
               private router: Router, 
               public actionSheetController: ActionSheetController, 
               public toastController: ToastController, 
-              public popoverController: PopoverController) { }
+              public popoverController: PopoverController,
+              private serial: Serial) { }
 
   ngOnInit() {
     this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
@@ -115,7 +117,26 @@ export class MainMenuComponent implements OnInit {
     console.log("pair clicked.");
     //TODO: bluetooth connection happens here and toast
     // displays the result
-    this.showToast("Pair Successful", "medium", 2000); 
+
+    this.serial.requestPermission().then(() => {
+      this.serial.open({
+        baudRate: 9800,
+        dataBits: 4,
+        stopBits: 1,
+        parity: 0,
+        dtr: true,
+        rts: true,
+        sleepOnPause: false
+      }).then(() => {
+        this.showToast("Pair Successful", "medium", 2000); 
+        console.log('Serial connection opened');
+        // this.serial.read().then{
+
+        // };
+      });
+    }).catch((error: any) => console.log(error));
+
+    
   }
 
 

@@ -18,6 +18,7 @@ import { ExercisesComponent } from './private/exercises/exercises.component';
 import { HistoryComponent } from './private/history/history.component';
 import { AdviceComponent } from './private/advice/advice.component';
 import { LogoutPopoverComponent } from './private/main-menu/logout-popover/logout-popover.component';
+import { Serial } from '@ionic-native/serial/ngx';
 
 @NgModule({
   declarations: [AppComponent, MainMenuComponent, PatientMenuComponent, ExercisesComponent, HistoryComponent, AdviceComponent, LogoutPopoverComponent],
@@ -26,7 +27,8 @@ import { LogoutPopoverComponent } from './private/main-menu/logout-popover/logou
             HttpClientModule,
             IonicModule.forRoot(), 
             AppRoutingModule, 
-            LoginPageModule
+            LoginPageModule,
+            Serial
   ],
   providers: [
     StatusBar,
