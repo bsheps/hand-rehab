@@ -2,6 +2,7 @@ import { Component, AfterContentInit } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { AuthGuardService } from '../../services/auth-route-guard'
 import { AmplifyService }  from 'aws-amplify-angular';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,10 +15,9 @@ export class LoginPage implements AfterContentInit{
   authState: any;
   // including AuthGuardService here so that it's available to listen to auth events
   authService: AuthGuardService
-  amplifyService: AmplifyService
   signUpConfig: any;
 
-  constructor(public events: Events, public guard: AuthGuardService, public amplify: AmplifyService
+  constructor(public events: Events, public guard: AuthGuardService, public amplifyService: AmplifyService, private router : Router
     ) {
     this.authState = {loggedIn: false};
     this.authService = guard;
@@ -63,11 +63,15 @@ export class LoginPage implements AfterContentInit{
         },
       ]
     };
-    this.amplifyService = amplify;
     this.amplifyService.authStateChange$
     .subscribe(authState => {
       this.authState.loggedIn = authState.state === 'signedIn';
       this.events.publish('data:AuthState', this.authState)
+      console.log("logged in is: " + JSON.stringify(authState));
+      if(this.authState.loggedIn){
+        // may need to set JWT and stuff
+        this.router.navigateByUrl('/menu');
+      }
     });
   }
 

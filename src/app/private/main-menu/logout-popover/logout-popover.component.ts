@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController } from '@ionic/angular';
+import { Events } from '@ionic/angular';
+import { Auth } from 'aws-amplify';
 
 @Component({
   selector: 'app-logout-popover',
@@ -13,14 +15,22 @@ import { PopoverController } from '@ionic/angular';
 })
 export class LogoutPopoverComponent implements OnInit {
 
-  constructor( private router: Router, private popoverController: PopoverController ) { }
+  setLogout = {loggedIn: false};
 
-  ngOnInit() {
-  }
+  constructor( private router: Router, private popoverController: PopoverController, public events: Events ) { }
+
+  ngOnInit() { }
 
   logout(){
-    this.popoverController.dismiss();
-    this.router.navigate(['/login']); 
+    Auth.signOut()
+    .then(data =>{
+      console.log(data);
+      this.events.publish('data:AuthState', this.setLogout);
+      this.router.navigate(['/login']); 
+    })
+    .catch(err => console.log(err));
+    
+    this.popoverController.dismiss();  
   }
 
   dismiss(){

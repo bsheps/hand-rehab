@@ -24,7 +24,6 @@ export class MainMenuComponent implements OnInit {
 
   ngOnInit() {
     this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
-      console.log("http get patient menu data: "+ data);
       this.patientList = data['patient'];
     })
   }
