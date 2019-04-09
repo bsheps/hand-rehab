@@ -16,6 +16,7 @@ export class LoginPage implements AfterContentInit{
   authService: AuthGuardService
   amplifyService: AmplifyService
   signUpConfig: any;
+  user: any;
 
    constructor(public events: Events, public guard: AuthGuardService, public amplify: AmplifyService
     ) {
@@ -61,6 +62,13 @@ export class LoginPage implements AfterContentInit{
           displayOrder: 3,
           type: 'string',
         },
+        {
+          label: 'Are you a Doctor (y/n)',
+          key: 'custom:isDoctorS',
+          required: true,
+          displayOrder: 4,
+          type: 'string'
+        }
       ]
     };
     this.amplifyService = amplify;
@@ -68,6 +76,11 @@ export class LoginPage implements AfterContentInit{
     .subscribe(authState => {
       this.authState.loggedIn = authState.state === 'signedIn';
       this.events.publish('data:AuthState', this.authState)
+
+      if(this.authState.loggedIn){
+        this.user = this.amplifyService.auth().currentUserInfo();
+      }
+
     });
   }
 
