@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Serial } from '@ionic-native/serial/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +19,6 @@ import { ExercisesComponent } from './private/exercises/exercises.component';
 import { HistoryComponent } from './private/history/history.component';
 import { AdviceComponent } from './private/advice/advice.component';
 import { LogoutPopoverComponent } from './private/main-menu/logout-popover/logout-popover.component';
-import { Serial } from '@ionic-native/serial/ngx';
 
 @NgModule({
   declarations: [AppComponent, MainMenuComponent, PatientMenuComponent, ExercisesComponent, HistoryComponent, AdviceComponent, LogoutPopoverComponent],
@@ -28,12 +28,12 @@ import { Serial } from '@ionic-native/serial/ngx';
             IonicModule.forRoot(), 
             AppRoutingModule, 
             LoginPageModule,
-            Serial
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AuthGuardService,
+    Serial,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
