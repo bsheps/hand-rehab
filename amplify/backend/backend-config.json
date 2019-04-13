@@ -15,6 +15,10 @@
 		"handRehabAppResource": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
+		},
+		"itemsResource": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
 		}
 	},
 	"function": {
@@ -32,6 +36,21 @@
 					]
 				}
 			]
+		},
+		"itemLambda": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "itemsResource",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
 		}
 	},
 	"api": {
@@ -42,6 +61,20 @@
 				{
 					"category": "function",
 					"resourceName": "handRehabAppLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"itemApiResource": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "itemLambda",
 					"attributes": [
 						"Name",
 						"Arn"

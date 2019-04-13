@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/items",
+            "lambdaFunction": "itemLambda",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "itemApiResource",
+    "apiName": "itemApiResource",
+    "functionArns": [
+        {
+            "lambdaFunction": "itemLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "hand-rehab-app-20190331104402-authRole",
+        "unAuthRoleName": "hand-rehab-app-20190331104402-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "itemLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

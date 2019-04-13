@@ -19,7 +19,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/auth/cognito47264419-cloudformation-template.yml",
 				"logicalId": "authcognito47264419"
 			},
-			"lastPushTimeStamp": "2019-04-01T01:33:26.244Z",
+			"lastPushTimeStamp": "2019-04-13T14:31:46.085Z",
 			"output": {
 				"IdentityPoolId": "us-east-2:6e919c08-f284-4a03-87e5-8ec3e7d48333",
 				"IdentityPoolName": "hand_rehab_app_identitypool_c7a35d3f__handenv",
@@ -41,7 +41,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/analytics/pinpoint-cloudformation-template.json",
 				"logicalId": "analyticshandrehabapp"
 			},
-			"lastPushTimeStamp": "2019-04-01T01:33:26.245Z",
+			"lastPushTimeStamp": "2019-04-13T14:31:46.086Z",
 			"output": {
 				"appName": "handrehabapp-handenv",
 				"Region": "us-east-1",
@@ -58,7 +58,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/storage/handRehabAppResource-cloudformation-template.json",
 				"logicalId": "storagehandRehabAppResource"
 			},
-			"lastPushTimeStamp": "2019-04-01T01:33:26.249Z",
+			"lastPushTimeStamp": "2019-04-13T14:31:46.087Z",
 			"output": {
 				"PartitionKeyName": "username",
 				"Region": "us-east-2",
@@ -67,6 +67,23 @@
 				"Name": "handRehabAppUsers-handenv"
 			},
 			"lastPushDirHash": "QF48vgVO9WNbxZl923G5kSwYWIo="
+		},
+		"itemsResource": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/storage/itemsResource-cloudformation-template.json",
+				"logicalId": "storageitemsResource"
+			},
+			"lastPushTimeStamp": "2019-04-13T14:31:46.088Z",
+			"output": {
+				"PartitionKeyName": "userId",
+				"Region": "us-east-2",
+				"Arn": "arn:aws:dynamodb:us-east-2:983001399348:table/itemsTable-handenv",
+				"PartitionKeyType": "S",
+				"Name": "itemsTable-handenv"
+			},
+			"lastPushDirHash": "8gta730qOblnYtvD0deVyxuQ8YA="
 		}
 	},
 	"function": {
@@ -91,13 +108,42 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/function/handRehabAppLambda-cloudformation-template.json",
 				"logicalId": "functionhandRehabAppLambda"
 			},
-			"lastPushTimeStamp": "2019-04-01T01:33:26.249Z",
+			"lastPushTimeStamp": "2019-04-13T14:31:46.088Z",
 			"output": {
 				"Region": "us-east-2",
 				"Arn": "arn:aws:lambda:us-east-2:983001399348:function:handRehabAppLambda-handenv",
 				"Name": "handRehabAppLambda-handenv"
 			},
 			"lastPushDirHash": "Qhe9Qr5XKLdRjNNsquj1rtjQ37U="
+		},
+		"itemLambda": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "itemsResource",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"lastBuildTimeStamp": "2019-04-13T14:29:35.052Z",
+			"lastPackageTimeStamp": "2019-04-13T14:29:35.140Z",
+			"distZipFilename": "itemLambda-1555165775-latest-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/function/itemLambda-cloudformation-template.json",
+				"logicalId": "functionitemLambda"
+			},
+			"lastPushTimeStamp": "2019-04-13T14:31:46.090Z",
+			"output": {
+				"Region": "us-east-2",
+				"Arn": "arn:aws:lambda:us-east-2:983001399348:function:itemLambdaName-handenv",
+				"Name": "itemLambdaName-handenv"
+			},
+			"lastPushDirHash": "+mXiQvof3ZoYz5oTqAWyUnQT0Ao="
 		}
 	},
 	"api": {
@@ -118,12 +164,36 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/api/handRehabAppApi-cloudformation-template.json",
 				"logicalId": "apihandRehabAppApi"
 			},
-			"lastPushTimeStamp": "2019-04-01T01:33:26.249Z",
+			"lastPushTimeStamp": "2019-04-13T14:31:46.089Z",
 			"output": {
 				"ApiName": "handRehabAppApi",
 				"RootUrl": "https://4urrfyv0xa.execute-api.us-east-2.amazonaws.com/handenv"
 			},
 			"lastPushDirHash": "uUOiZXSKalm4Id+pIyN6BRKI058="
+		},
+		"itemApiResource": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "itemLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/api/itemApiResource-cloudformation-template.json",
+				"logicalId": "apiitemApiResource"
+			},
+			"lastPushTimeStamp": "2019-04-13T14:31:46.090Z",
+			"output": {
+				"ApiName": "itemApiResource",
+				"RootUrl": "https://vlikronto7.execute-api.us-east-2.amazonaws.com/handenv"
+			},
+			"lastPushDirHash": "qFXEbls8q4x9PSb0bsRXdt41QDU="
 		}
 	}
 }

@@ -2,6 +2,7 @@ import { Component, AfterContentInit } from '@angular/core';
 import { Events } from '@ionic/angular';
 import { AuthGuardService } from '../../services/auth-route-guard'
 import { AmplifyService }  from 'aws-amplify-angular';
+import { Router } from '@angular/router';
 
 
  @Component({
@@ -18,7 +19,7 @@ export class LoginPage implements AfterContentInit{
   signUpConfig: any;
   user: any;
 
-   constructor(public events: Events, public guard: AuthGuardService, public amplify: AmplifyService
+   constructor(public events: Events, public guard: AuthGuardService, public amplify: AmplifyService, private router: Router
     ) {
     this.authState = {loggedIn: false};
     this.authService = guard;
@@ -79,6 +80,7 @@ export class LoginPage implements AfterContentInit{
 
       if(this.authState.loggedIn){
         this.user = this.amplifyService.auth().currentUserInfo();
+        this.router.navigateByUrl('/menu');
       }
 
     });

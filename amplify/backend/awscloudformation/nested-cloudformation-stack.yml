@@ -182,6 +182,18 @@
 				}
 			}
 		},
+		"storageitemsResource": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/storage/itemsResource-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "itemsTable",
+					"partitionKeyName": "userId",
+					"partitionKeyType": "S",
+					"env": "handenv"
+				}
+			}
+		},
 		"functionhandRehabAppLambda": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
@@ -196,6 +208,27 @@
 					"storagehandRehabAppResourceArn": {
 						"Fn::GetAtt": [
 							"storagehandRehabAppResource",
+							"Outputs.Arn"
+						]
+					},
+					"env": "handenv"
+				}
+			}
+		},
+		"functionitemLambda": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/function/itemLambda-cloudformation-template.json",
+				"Parameters": {
+					"storageitemsResourceName": {
+						"Fn::GetAtt": [
+							"storageitemsResource",
+							"Outputs.Name"
+						]
+					},
+					"storageitemsResourceArn": {
+						"Fn::GetAtt": [
+							"storageitemsResource",
 							"Outputs.Arn"
 						]
 					},
@@ -223,6 +256,33 @@
 					"functionhandRehabAppLambdaArn": {
 						"Fn::GetAtt": [
 							"functionhandRehabAppLambda",
+							"Outputs.Arn"
+						]
+					},
+					"env": "handenv"
+				}
+			}
+		},
+		"apiitemApiResource": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/hand-rehab-app-20190331104402-deployment/amplify-cfn-templates/api/itemApiResource-cloudformation-template.json",
+				"Parameters": {
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"functionitemLambdaName": {
+						"Fn::GetAtt": [
+							"functionitemLambda",
+							"Outputs.Name"
+						]
+					},
+					"functionitemLambdaArn": {
+						"Fn::GetAtt": [
+							"functionitemLambda",
 							"Outputs.Arn"
 						]
 					},

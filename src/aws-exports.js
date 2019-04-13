@@ -13,12 +13,21 @@ const awsmobile = {
         {
             "tableName": "handRehabAppUsers-handenv",
             "region": "us-east-2"
+        },
+        {
+            "tableName": "itemsTable-handenv",
+            "region": "us-east-2"
         }
     ],
     "aws_cloud_logic_custom": [
         {
             "name": "handRehabAppApi",
             "endpoint": "https://4urrfyv0xa.execute-api.us-east-2.amazonaws.com/handenv",
+            "region": "us-east-2"
+        },
+        {
+            "name": "itemApiResource",
+            "endpoint": "https://vlikronto7.execute-api.us-east-2.amazonaws.com/handenv",
             "region": "us-east-2"
         }
     ]

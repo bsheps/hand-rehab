@@ -11,9 +11,10 @@ import { AppComponent } from './app.component';
 
 import { AuthGuardService } from '../app/services/auth-route-guard';
 import { LoginPageModule } from '../app/public/login/login.module';
+import { MenuComponent } from './private/menu/menu.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MenuComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, LoginPageModule],
   providers: [
