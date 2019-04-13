@@ -8,33 +8,6 @@ import { LogoutPopoverComponent } from './logout-popover/logout-popover.componen
 import { IPatient } from '../patientInterface';
 import { AmplifyService } from 'aws-amplify-angular';
 
-import { v4 as uuid } from 'uuid';
-
-export class ToDoList {
-  userId: any;
-  items: Array<ToDoItem>
-
-  constructor(params){
-    this.items = params.items || [];
-    this.userId = params.userId;
-  }
-}
-
-export class ToDoItem {
-  id: string;
-  title: string;
-  description: string;
-  status: any;
-
-  constructor(params){
-    this.id = uuid();
-    this.title = params.title;
-    this.description = params.description;
-    this.status = 'new';
-  }
-}
-
-
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
@@ -58,13 +31,16 @@ export class MainMenuComponent implements OnInit {
               public amplifyService: AmplifyService) { }
 
   ngOnInit() {
-    this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
-      this.patientList = data['patient'];
-    });
+
+    // This uses local dummy data. 
+    // Save.
+    // this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
+    //   this.patientList = data['patient'];
+    // });
+
     this.amplifyService.auth().currentUserInfo().then( data => {
-      // alert("user: "+ JSON.stringify(data));
-      this.user = data;
-      this.getItems();
+      this.user = data; //will be used later for api when it's secured
+      this.getPatientList();
     });
     
   }
@@ -158,15 +134,14 @@ export class MainMenuComponent implements OnInit {
     this.showToast("Pair Successful", "medium", 2000); 
   }
 
-  getItems(){
+  getPatientList(){
     if (this.user){
       // Use AWS Amplify to get the list
-      this.amplifyService.api().get('HelloWorldBrandon', `/test`, {}).then((res) => {
-        console.log("getItems result: "+ JSON.stringify(res));
-        if (res && res.length > 0){
-          this.itemList = res[0];
+      this.amplifyService.api().get('API', `/getpatients`, {}).then((res) => {
+        if (res){
+          this.patientList = res.patient;
         } else {
-          this.itemList = new ToDoList({userId: this.user.id, items: []});
+          this.patientList = [];
         }
       })
       .catch((err) => {
