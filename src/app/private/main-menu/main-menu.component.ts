@@ -6,26 +6,67 @@ import { ToastController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { LogoutPopoverComponent } from './logout-popover/logout-popover.component';
 import { IPatient } from '../patientInterface';
+import { AmplifyService } from 'aws-amplify-angular';
+
+import { v4 as uuid } from 'uuid';
+
+export class ToDoList {
+  userId: any;
+  items: Array<ToDoItem>
+
+  constructor(params){
+    this.items = params.items || [];
+    this.userId = params.userId;
+  }
+}
+
+export class ToDoItem {
+  id: string;
+  title: string;
+  description: string;
+  status: any;
+
+  constructor(params){
+    this.id = uuid();
+    this.title = params.title;
+    this.description = params.description;
+    this.status = 'new';
+  }
+}
+
 
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
   styleUrls: ['./main-menu.component.scss']
 })
+
 export class MainMenuComponent implements OnInit {
   
   patientList: IPatient[];
+
+  modal: any;
+  data: any;
+  user: any;
+  itemList: any;
 
   constructor(private http: HttpClient, 
               private router: Router, 
               public actionSheetController: ActionSheetController, 
               public toastController: ToastController, 
-              public popoverController: PopoverController) { }
+              public popoverController: PopoverController,
+              public amplifyService: AmplifyService) { }
 
   ngOnInit() {
     this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
       this.patientList = data['patient'];
-    })
+    });
+    this.amplifyService.auth().currentUserInfo().then( data => {
+      // alert("user: "+ JSON.stringify(data));
+      this.user = data;
+      this.getItems();
+    });
+    
   }
 
   patientSelected(patient){
@@ -117,6 +158,24 @@ export class MainMenuComponent implements OnInit {
     this.showToast("Pair Successful", "medium", 2000); 
   }
 
-
-
+  getItems(){
+    if (this.user){
+      // Use AWS Amplify to get the list
+      this.amplifyService.api().get('HelloWorldBrandon', `/test`, {}).then((res) => {
+        console.log("getItems result: "+ JSON.stringify(res));
+        if (res && res.length > 0){
+          this.itemList = res[0];
+        } else {
+          this.itemList = new ToDoList({userId: this.user.id, items: []});
+        }
+      })
+      .catch((err) => {
+        console.log(`Error getting list: ${err}`)
+      })
+    } else {
+      console.log('Cannot get items: no active user')
+    }
+  }
 }
+
+

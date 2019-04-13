@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"cognitod9604aa8": {
+		"cognito47264419": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
@@ -9,6 +9,78 @@
 		"handrehabapp": {
 			"service": "Pinpoint",
 			"providerPlugin": "awscloudformation"
+		}
+	},
+	"storage": {
+		"handRehabAppResource": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		},
+		"itemsResource": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"handRehabAppLambda": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "handRehabAppResource",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"itemLambda": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "itemsResource",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		}
+	},
+	"api": {
+		"handRehabAppApi": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "handRehabAppLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
+		},
+		"itemApiResource": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "itemLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
 		}
 	}
 }
