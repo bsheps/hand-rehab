@@ -4,6 +4,8 @@ import { IPatient } from '../patientInterface';
 import { HttpClient } from '@angular/common/http';
 import { IExercise } from './exerciseInterface';
 import { ToastController } from '@ionic/angular';
+import { AmplifyService } from 'aws-amplify-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-exercises',
@@ -16,17 +18,32 @@ export class ExercisesComponent implements OnInit {
   patient: IPatient = { id: null, name: null};
   isDoctor:boolean;
 
-  constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, public toastController: ToastController ) { }
+  constructor(private activatedRoute: ActivatedRoute, 
+              private http: HttpClient, 
+              public toastController: ToastController, 
+              private amplifyService:AmplifyService,
+              private router: Router ) { }
 
   ngOnInit() {
     this.patient.name = this.activatedRoute.snapshot.queryParamMap.get('patient');
     this.patient.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id'));
 
-    this.http.get("../../assets/dummyExerciseData.json").subscribe(data =>{
+    console.log("patient is: "+ JSON.stringify(this.patient));
+
+    this.amplifyService.api().post('API', `/exercisedetails`, {body: this.patient}).then(response =>{
+      console.log("POST response was: " + JSON.stringify(response));
+      let data = response['data'];
       this.exerciseList = data['exerciseList'];
       this.isDoctor     = data['isDoctor'];
-      console.log("doctor: " +this.isDoctor)
-    })
+    }).catch((err) => {
+      console.log(`Error getting exercise details: ${err}`)
+    });
+    // Commenting this out, but should be saved. This calls local dummy data
+    // this.http.get("../../assets/dummyExerciseData.json").subscribe(data =>{
+    //   this.exerciseList = data['exerciseList'];
+    //   this.isDoctor     = data['isDoctor'];
+    //   console.log("doctor: " +this.isDoctor)
+    // })
   }
 
   startClicked(exercise:IExercise){
@@ -66,5 +83,5 @@ export class ExercisesComponent implements OnInit {
     exercise.isAssigned = !exercise.isAssigned;
     this.showToast(exercise.isAssigned?("ASSIGNED: "+exercise.title):("REMOVED: "+exercise.title), "medium", 1000);
   }
-
+  
 }

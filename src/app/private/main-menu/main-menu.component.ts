@@ -7,6 +7,7 @@ import { PopoverController } from '@ionic/angular';
 import { LogoutPopoverComponent } from './logout-popover/logout-popover.component';
 import { IPatient } from '../patientInterface';
 import { AmplifyService } from 'aws-amplify-angular';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-main-menu',
@@ -17,26 +18,25 @@ import { AmplifyService } from 'aws-amplify-angular';
 export class MainMenuComponent implements OnInit {
   
   patientList: IPatient[];
-
-  modal: any;
-  data: any;
-  user: any;
-  itemList: any;
+  loading:any; // for loading indicator
+  user:any;    // user data
 
   constructor(private http: HttpClient, 
               private router: Router, 
               public actionSheetController: ActionSheetController, 
               public toastController: ToastController, 
               public popoverController: PopoverController,
-              public amplifyService: AmplifyService) { }
+              public amplifyService: AmplifyService,
+              private loadingController: LoadingController) { }
+              
 
   ngOnInit() {
 
-    // This uses local dummy data. 
-    // Save.
+    // This uses local dummy data. Save.
     // this.http.get("../../assets/dummyMenuData.json").subscribe(data =>{
     //   this.patientList = data['patient'];
     // });
+    this.presentLoading();
 
     this.amplifyService.auth().currentUserInfo().then( data => {
       this.user = data; //will be used later for api when it's secured
@@ -118,6 +118,14 @@ export class MainMenuComponent implements OnInit {
     toast.present();
   }
 
+  async presentLoading(){
+    // displays a loading indicator
+    this.loading = await this.loadingController.create({
+      message: 'Please wait...'
+    });
+    await this.loading.present();
+  }
+
   async presentLogoutPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: LogoutPopoverComponent,
@@ -143,6 +151,7 @@ export class MainMenuComponent implements OnInit {
         } else {
           this.patientList = [];
         }
+        this.loading.dismiss(); //dismiss loading indicator since data should be processed now
       })
       .catch((err) => {
         console.log(`Error getting list: ${err}`)
