@@ -44,23 +44,25 @@ export class MainMenuComponent implements OnInit {
     });
     
   }
-
-  patientSelected(patient){
-    console.log("Patient selected: " + patient.name);
-    let navigationExtras: NavigationExtras = {
-          queryParams:{
-            patient : patient.name,
-            id: patient.id
-          }
-  };
-    this.router.navigate(['/patientMenu'], navigationExtras);
-  }
+  //  Save. This gets used for patient menu. (we may use that component in future)
+  // patientSelected(patient){
+  //   console.log("Patient selected: " + patient.name);
+  //   let navigationExtras: NavigationExtras = {
+  //         queryParams:{
+  //           patient : patient.name,
+  //           id: patient.id
+  //         }
+  // };
+  //   this.router.navigate(['/patientMenu'], navigationExtras);
+  // }
 
   async presentActionSheet(patient) {
+    console.log("patient selected: "+ JSON.stringify(patient))
     let navigationExtras: NavigationExtras = {
       queryParams:{
-        patient : patient.name,
-        id: patient.id
+        PAT_FNAME : patient.PAT_FNAME,
+        PAT_LNAME: patient.PAT_LNAME,
+        PAT_ID: patient.PAT_ID
       }
     }
     const actionSheet = await this.actionSheetController.create({
@@ -147,7 +149,7 @@ export class MainMenuComponent implements OnInit {
       // Use AWS Amplify to get the list
       this.amplifyService.api().get('API', `/getpatients`, {}).then((res) => {
         if (res){
-          this.patientList = res.patient;
+          this.patientList = res;
         } else {
           this.patientList = [];
         }

@@ -12,7 +12,7 @@
         <!-- <ion-item button (click)="patientSelected(patient)" *ngFor="let patient of patientList" value="patient" class="primary"> -->
             <ion-item button (click)="presentActionSheet(patient)" *ngFor="let patient of patientList" value="patient" class="primary">
           <ion-icon color="secondary" name="md-person" slot="start"></ion-icon>
-          <ion-label>{{patient.name}}</ion-label>
+          <ion-label>{{patient.PAT_FNAME}} {{patient.PAT_LNAME}}</ion-label>
         </ion-item>
     </ion-card>
   <ion-footer>

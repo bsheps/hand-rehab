@@ -11,16 +11,22 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
-
-  patient: IPatient = { id: null, name: null};
+  patient: IPatient= {
+    PAT_ID: null,
+    PAT_LNAME: null,
+    PAT_FNAME: null,
+    DOC_ID: null
+  }
+  // patient: IPatient;
   historyList: IHistory[];
   isDoctor: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private http: HttpClient, public toastController: ToastController) { }
 
   ngOnInit() {
-    this.patient.name = this.activatedRoute.snapshot.queryParamMap.get('patient');
-    this.patient.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id'));
+    this.patient.PAT_FNAME = this.activatedRoute.snapshot.queryParamMap.get('PAT_FNAME');
+    this.patient.PAT_LNAME = this.activatedRoute.snapshot.queryParamMap.get('PAT_LNAME');
+    this.patient.PAT_ID = Number(this.activatedRoute.snapshot.queryParamMap.get('PAT_ID'));
 
     this.http.get("../../assets/dummyHistoryData.json").subscribe( data =>{
       this.historyList = data['historyList'];

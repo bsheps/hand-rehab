@@ -15,7 +15,12 @@ import { Router } from '@angular/router';
 export class ExercisesComponent implements OnInit {
   
   exerciseList: IExercise[];
-  patient: IPatient = { id: null, name: null};
+  patient: IPatient= {
+    PAT_ID: null,
+    PAT_LNAME: null,
+    PAT_FNAME: null,
+    DOC_ID: null
+  }
   isDoctor:boolean;
 
   constructor(private activatedRoute: ActivatedRoute, 
@@ -25,25 +30,26 @@ export class ExercisesComponent implements OnInit {
               private router: Router ) { }
 
   ngOnInit() {
-    this.patient.name = this.activatedRoute.snapshot.queryParamMap.get('patient');
-    this.patient.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id'));
+    this.patient.PAT_FNAME = this.activatedRoute.snapshot.queryParamMap.get('PAT_FNAME');
+    this.patient.PAT_LNAME = this.activatedRoute.snapshot.queryParamMap.get('PAT_LNAME');
+    this.patient.PAT_ID = Number(this.activatedRoute.snapshot.queryParamMap.get('PAT_ID'));
 
     console.log("patient is: "+ JSON.stringify(this.patient));
 
-    this.amplifyService.api().post('API', `/exercisedetails`, {body: this.patient}).then(response =>{
-      console.log("POST response was: " + JSON.stringify(response));
-      let data = response['data'];
-      this.exerciseList = data['exerciseList'];
-      this.isDoctor     = data['isDoctor'];
-    }).catch((err) => {
-      console.log(`Error getting exercise details: ${err}`)
-    });
-    // Commenting this out, but should be saved. This calls local dummy data
-    // this.http.get("../../assets/dummyExerciseData.json").subscribe(data =>{
+    // this.amplifyService.api().post('API', `/exercisedetails`, {body: this.patient}).then(response =>{
+    //   console.log("POST response was: " + JSON.stringify(response));
+    //   let data = response['data'];
     //   this.exerciseList = data['exerciseList'];
     //   this.isDoctor     = data['isDoctor'];
-    //   console.log("doctor: " +this.isDoctor)
-    // })
+    // }).catch((err) => {
+    //   console.log(`Error getting exercise details: ${err}`)
+    // });
+    // Commenting this out, but should be saved. This calls local dummy data
+    this.http.get("../../assets/dummyExerciseData.json").subscribe(data =>{
+      this.exerciseList = data['exerciseList'];
+      this.isDoctor     = data['isDoctor'];
+      console.log("doctor: " +this.isDoctor)
+    })
   }
 
   startClicked(exercise:IExercise){

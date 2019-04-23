@@ -1,10 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{patient.name}}</ion-title>
-    <ion-back-button></ion-back-button>
+    <ion-title *ngIf="patient">{{patient.PAT_FNAME}} {{patient.PAT_LNAME}}</ion-title>
+    <ion-button slot="start" fill="clear" color="primary" routerLink="/menu"><ion-icon name="arrow-back"></ion-icon>Back</ion-button>
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding>
   Use tabs
  </ion-content>

@@ -8,7 +8,12 @@ import { IPatient } from '../patientInterface';
   styleUrls: ['./patient-menu.component.scss']
 })
 export class PatientMenuComponent implements OnInit {
-  patient : IPatient = { id: null, name: null};
+  patient: IPatient= {
+    PAT_ID: null,
+    PAT_LNAME: null,
+    PAT_FNAME: null,
+    DOC_ID: null
+  }
 
   menuOptions = [
     {
@@ -27,8 +32,9 @@ export class PatientMenuComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.patient.name = this.activatedRoute.snapshot.queryParamMap.get('patient');
-    this.patient.id = Number(this.activatedRoute.snapshot.queryParamMap.get('id'));
+    this.patient.PAT_FNAME = this.activatedRoute.snapshot.queryParamMap.get('PAT_FNAME');
+    this.patient.PAT_LNAME = this.activatedRoute.snapshot.queryParamMap.get('PAT_LNAME');
+    this.patient.PAT_ID = Number(this.activatedRoute.snapshot.queryParamMap.get('PAT_ID'));
     console.log("patient: "+ JSON.stringify(this.patient))
   }
 
@@ -36,8 +42,9 @@ export class PatientMenuComponent implements OnInit {
 
     let navigationExtras: NavigationExtras = {
       queryParams:{
-        patient : this.patient.name,
-        id: this.patient.id
+        PAT_FNAME : this.patient.PAT_FNAME,
+        PAT_LNAME : this.patient.PAT_LNAME,
+        PAT_ID: this.patient.PAT_ID
       }
     };
     switch(option.value){

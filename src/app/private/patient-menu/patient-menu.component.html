@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{patient.name}}</ion-title>
+    <ion-title *ngIf="patient">{{patient.PAT_FNAME}} {{patient.PAT_LNAME}}</ion-title>
     <ion-back-button></ion-back-button>
   </ion-toolbar>
 </ion-header>
