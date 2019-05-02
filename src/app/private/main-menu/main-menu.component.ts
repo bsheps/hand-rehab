@@ -8,6 +8,8 @@ import { LogoutPopoverComponent } from './logout-popover/logout-popover.componen
 import { IPatient } from '../patientInterface';
 import { AmplifyService } from 'aws-amplify-angular';
 import { LoadingController } from '@ionic/angular';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+
 
 @Component({
   selector: 'app-main-menu',
@@ -27,7 +29,8 @@ export class MainMenuComponent implements OnInit {
               public toastController: ToastController, 
               public popoverController: PopoverController,
               public amplifyService: AmplifyService,
-              private loadingController: LoadingController) { }
+              private loadingController: LoadingController,
+              private bluetoothSerial: BluetoothSerial) { }
               
 
   ngOnInit() {
@@ -140,8 +143,40 @@ export class MainMenuComponent implements OnInit {
   pairClicked(){
     console.log("pair clicked.");
     //TODO: bluetooth connection happens here and toast
+    this.bluetoothSerial.list().then(
+      val => {
+        this.showToast("Available devices: " + JSON.stringify(val), "medium", 1000);
+        console.log("Available devices: " + JSON.stringify(val), "medium", 1000);
+        //todo display list to pick from
+        var address = val[0].address;
+        this.showToast(address, "medium", 1000);
+        this.bluetoothSerial.connect(address).subscribe(
+
+          successobj => {
+            this.showToast("Connected", "medium", 1000);
+            console.log("Available devices: " + JSON.stringify(val), "medium", 1000);
+
+            this.bluetoothSerial.subscribe("\n").subscribe(
+              incoming => {
+              this.showToast("Got: " + JSON.stringify(incoming), "medium", 1000);
+              console.log("Available devices: " + JSON.stringify(val), "medium", 1000);
+              this.bluetoothSerial.write(incoming);
+              },
+            )
+          },
+
+          failureobj => {
+            this.showToast("Failed to connect", "medium", 1000);
+            console.log("Failed to connect: " + JSON.stringify(failureobj));
+          }
+        );
+      },
+      val => {
+        this.showToast("Failure: " + JSON.stringify(val), "medium", 1000);
+      }
+    )
     // displays the result
-    this.showToast("Pair Successful", "medium", 2000); 
+    // this.showToast("Pair Successful", "medium", 2000); 
   }
 
   getPatientList(){
