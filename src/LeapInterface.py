@@ -1,7 +1,11 @@
 import math
+import sys
+
 import ArduinoInterface
 import Leap
 import time
+from threading import Thread
+import BluetoothService
 
 
 def process_frame(frame):
@@ -60,11 +64,31 @@ def calc_thumb(finger, palm_normal):
 	return str(int(angle))
 
 
+def write_to_file(f, string):
+	print(string)
+	f.write(string + "\n")
+
+
 def loop_frame(controller):
+	socket = BluetoothService.start_server()
+
+	Thread(target=BluetoothService.receive_msg, args=(socket,)).start()
+
+	# num = 0
+	# while True:
+	# 	# data = sys.stdin.readline()
+	# 	str_num = str(num)
+	# 	data = str_num + "a" + str_num + "b" + str_num +  "c" + str_num + str_num + "d" + str_num + "e" + "\n"
+	# 	# print(data)
+	# 	BluetoothService.send_msg(socket, data)
+	# 	num += 1
+	# 	time.sleep(0.1)
+
 	while True:
 		command = process_frame(controller.frame())
 		if command is not None:
-			ArduinoInterface.write_serial(command)
+			BluetoothService.send_msg(socket, command + "\n")
+			# ArduinoInterface.write_serial(command)
 		time.sleep(0.1)
 
 
