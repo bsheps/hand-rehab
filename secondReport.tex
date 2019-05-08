@@ -19,7 +19,7 @@
 
 \section{Functionality}
     The smartphone application will communicate wirelessly with the robotic glove. The robotic glove will receive exercise direction from the application while communicating glove positional data back to the application. The application will process, display and communicate this glove data to the patient while simultaneously uploading hand data to the cloud. With the data stored in the cloud, the rehab professional can login to the application, access patient data and prescribe exercises remotely.
-    \begin{figure}[h]
+    \begin{figure}[H]
          \centering
          \includegraphics[width=1\textwidth]{rahmanSchematic}
          \caption{Rehabilitation System Schematic}
@@ -88,17 +88,46 @@ The main change is the removal of the robotic glove. The glove has not been prod
             The ArduinoInterface opens a serial connection to the Arduino and writes the string given to it. In the Arduino, while the serial buffer has information, serviceSerial builds an integer object and sends out the built integer as soon as it encounters an alphabetical character in the buffer. The Arduino is wired to the robotic hand's servos, with one servo for each finger. The servos take instructions in the form of pulse-width modulation (pwm), so another conversion needs to be made. Each servo has different tolerances, so minimum and maxisum pwm values are calibrated for each finger. For example, the thumb may have a minimum pwm of 200 and a maximum pwm of 400. serviceSerial maps the instruction, "180a", to those values and sends the value "400" to the pwm library for the thumb.
             
         \subsection{Ionic Application}
-            The ionic application will be the main user interface for both the doctor and patient screens. The goal is to dynamically render all screens from the server metadata. This will be accomplished through a multi layered metadata schema and recursive programming. The benefits of this design choice include code reusability due to generic classes and a more maintainable code base. 
+            The ionic application will be the main user interface for both the doctor and patient screens. The screens are dynamically rendered based on server metadata by using NgModules. Since the screens are dynamically rendered, the doctor and patient screens utilize the same UI components.
             
-            The general flow of events within the ionic application begins with the user login screen. This screen will prompt the user for their login and password. If an account needs to be created the user can click the register button to create an account. After authentication, the user will enter the menu screen. If there is only a single patient, then only the patient's name will show up as a menu option. If the user is a doctor then a list of all patients will populate on the menu screen. After selecting a patient name from the menu screen, the user will be prompted with a second menu option: exercise, history, or advice. The exercise screen is how the doctor or patient can prescribe or rehab glove exercise modules. The history screen is where previous activity will be displayed, allowing the user to gauge progress. The advice screen is currently undefined, but it is expected to either display advice from the doctor and/or basic troubleshooting help.
-            \begin{figure}[h]
+            %The goal is to dynamically render all screens from the server metadata. This will be accomplished through a multi layered metadata schema and recursive programming. The benefits of this design choice include code reusability due to generic classes and a more maintainable code base. 
+            
+            The general flow of events within the ionic application begins with the user login screen. 
+            
+            \begin{figure}[H]
             \centering
-            \includegraphics[width=140mm, scale=1]{ionicAppLayout}
-            \caption{Ionic application diagram}
+            \includegraphics[width=50mm, scale=1]{loginScreen}
+            \includegraphics[width=50mm, scale=1]{signup}
+            \caption{login and registration screens \textit{(AWS cognito)}}
             \end{figure}
             
-            Additional design decision include using an AuthGuard service to protect the logged in screens and a single app module. The AuthGuard functions in conjunction with an authentication service, which manages the storage of our session token. The current plan is to stick with one app module since the application only has a few screens right now. This decision may be revisited as the application grows in size (IE: it may make more sense to create additional modules to help structure a growing code base). 
+            This screen will prompt the user for their login and password. If an account needs to be created the user can click the register button to create an account. After authentication, the user will enter the menu screen. 
             
+            \begin{figure}[H]
+            \centering
+            \includegraphics[width=50mm, scale=1]{patientMenu}
+            \includegraphics[width=50mm, scale=1]{patientMenuAction}
+            \caption{Doctor view of the main menu screen and action sheet.\textit{ Note: patient view would only see 1 entry}}
+            \end{figure}
+            
+            If there is only a single patient, then only the patient's name will show up as a menu option. If the user is a doctor then a list of all patients will populate on the menu screen (as shown). After selecting a patient name from the menu screen, the user will be prompted with an action sheet menu. The menu allows the user to delete a user or navigate to either exercise, history or advice screen. 
+            
+            \begin{figure}[H]
+            \centering
+            \includegraphics[width=50mm, scale=1]{exerciseScreen}
+            \includegraphics[width=50mm, scale=1]{history}
+            \caption{Doctor view of exercise screen (left) and history screen (right) \textit{Note: Patient view of exercise screen would only show assigned items and omit have the `assign/unassign button'}}
+            \end{figure}
+                        
+            The exercise screen is how the doctor or patient can prescribe or execute rehab glove exercises. The history screen is where previous activity is displayed, allowing the user to gauge progress. The advice screen is currently undefined, but it is expected to either display advice from the doctor and/or basic troubleshooting help.
+            
+            Additional design decision include using an authguard service to protect the logged in screens and a single app module. The AuthGuard functions in conjunction with an authentication service, which manages the storage of our session token. We are using the built in ionic api server to handle our api calls along with the AWS export file. The app is held together with a single app module.
+            
+            \begin{figure}[H]
+            \centering
+            \includegraphics[width=140mm, scale=1]{IonicDiagramFinal}
+            \caption{Initial ionic application diagram}
+            \end{figure}
         \subsection{Cloud Service}
 	As mentioned before we will be using Amazon Cognito which will take care of all of our sign up, sign in, authentication, and forgot password services for users. All of the code is handled on the AWS side, we just simply display a module object on our html page. It has a built in UI which takes care of our login and sign up page design.
 
