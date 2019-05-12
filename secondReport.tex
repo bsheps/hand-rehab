@@ -83,9 +83,22 @@ The main change is the removal of the robotic glove. The glove has not been prod
             \caption{Leap Motion to Arduino}
             \end{figure}
 
-            Figure 5 shows the general design of how data is extracted from the Leap Motion device and process by the Arduino. The data shown in Figure 4 comes in the form of frames via the LeapController. To deal with the 200 frames per second issue mention earlier, LeapInterface runs a a method, loop\_frame, that manually polls the LeapController at a reduced rate of 20 frames per second. The frames are then processed as described earlier and passed to the ArduinoInterface.The final string passed to the ArduinoInterface is in the form of a letter deliminated string, with each succeeding letter indicating the next finger. For example, if all the fingers were at 180 degrees, the string generated would be in the form "180a180b180c180d180e".
+            The above figure shows the general design of how data is extracted from the Leap Motion device and process by the Arduino. The data shown in Figure 4 comes in the form of frames via the LeapController. To deal with the 200 frames per second issue mention earlier, LeapInterface runs a a method, loop\_frame, that manually polls the LeapController at a reduced rate of 20 frames per second. The frames are then processed as described earlier and passed to the ArduinoInterface.The final string passed to the ArduinoInterface is in the form of a letter deliminated string, with each succeeding letter indicating the next finger. For example, if all the fingers were at 180 degrees, the string generated would be in the form "180a180b180c180d180e".
 
-            The ArduinoInterface opens a serial connection to the Arduino and writes the string given to it. In the Arduino, while the serial buffer has information, serviceSerial builds an integer object and sends out the built integer as soon as it encounters an alphabetical character in the buffer. The Arduino is wired to the robotic hand's servos, with one servo for each finger. The servos take instructions in the form of pulse-width modulation (pwm), so another conversion needs to be made. Each servo has different tolerances, so minimum and maxisum pwm values are calibrated for each finger. For example, the thumb may have a minimum pwm of 200 and a maximum pwm of 400. serviceSerial maps the instruction, "180a", to those values and sends the value "400" to the pwm library for the thumb.
+            The ArduinoInterface opens a serial connection to the Arduino and writes the string given to it. In the Arduino, while the serial buffer has information, serviceSerial builds an integer object and sends out the built integer as soon as it encounters an alphabetical character in the buffer. The Arduino is wired to the robotic hand's servos, with one servo for each finger. The servos take instructions in the form of pulse-width modulation (pwm), so another conversion needs to be made. Each servo has different tolerances, so minimum and maximum pwm values are calibrated for each finger. For example, the thumb may have a minimum pwm of 200 and a maximum pwm of 400. serviceSerial maps the instruction, "180a", to those values and sends the value "400" to the pwm library for the thumb.
+            
+        \subsection{Bluetooth Integration}
+        	Purely reflecting the tracked movement doesn't provide enough granularity in assistance for exercises. This is resolved by integrating the ionic application to the process via Bluetooth. 
+        	\begin{figure}[h]
+            \centering
+            \includegraphics[width=140mm, scale=1]{btDiagram}
+            \caption{Bluetooth Integration}
+            \end{figure}
+            
+            The figure above shows the updated process with Bluetooth integration. Instead of directly forwarding finger positions to the Arduino, the LeapInterface sends it to the ionic application. This gives the ionic application the opportunity to calculate instructions for the Arduino based on the prescription provided by the doctor. After the calculation, the ionic application sends the updated instructions back to the LeapInterface. Finally, the LeapInterface sends these instructions to the Arduino. The reason the application doesn't send the instructions directly to the Arduino is to reduce the needed bluetooth connections to one, and because the Leap Motion sensor and the Arduino mechanical hand are prototyping devices for a singular assistive glove device.
+            
+            For the Leap Motion program, the python library pybluez is used and the ionic application uses the Ionic Native BluetoothSerial library.
+           
             
         \subsection{Ionic Application}
             The ionic application will be the main user interface for both the doctor and patient screens. The screens are dynamically rendered based on server metadata by using NgModules. Since the screens are dynamically rendered, the doctor and patient screens utilize the same UI components.
@@ -154,7 +167,7 @@ The main change is the removal of the robotic glove. The glove has not been prod
          \item Joseph Yang: Mechanical Hand
         \end{itemize}
 
-            Progress is tracked through milestones in implementation. The first milestone is to establish a serial connection from the Leap Motion device to the mechanical hand and to control the hand through data gathered from the Leap Motion device. The following milestone is to include the Ionic application through a bluetooth connection. The Ionic application would act as a router for data between the Leap Motion device and the mechanical hand. Finally would be to connect the AWS cloud to the application.
+            Progress is tracked through milestones in implementation. The first milestone was to establish a serial connection from the Leap Motion device to the mechanical hand and to control the hand through data gathered from the Leap Motion device. The following milestone was to include the Ionic application through a bluetooth connection. The Ionic application would act as a router for data between the Leap Motion device and the mechanical hand. The final milestone was to connect the AWS cloud to the application.
 
             When the process flow is complete with all platforms connected, features will be added as time allows. These features include messaging between doctors and patients, voice control, and unique interfaces for doctors and patients.
 
